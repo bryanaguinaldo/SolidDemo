@@ -1,4 +1,6 @@
-﻿namespace SolidDemo.Accounts;
+﻿using SolidDemo.Enums;
+
+namespace SolidDemo.Interfaces;
 
 internal interface IAccount
 {

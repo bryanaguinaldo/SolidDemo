@@ -1,4 +1,7 @@
-﻿namespace SolidDemo.Accounts;
+﻿using SolidDemo.Enums;
+using SolidDemo.Interfaces;
+
+namespace SolidDemo.Accounts;
 
 internal class TimeDepositAccount(int accountId, decimal balance, DateTime dateCreated, int period) :
     Account(accountId, balance), ITimeDepositAccount

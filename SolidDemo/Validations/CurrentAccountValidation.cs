@@ -1,4 +1,5 @@
-﻿using SolidDemo.Accounts;
+﻿using SolidDemo.Enums;
+using SolidDemo.Interfaces;
 
 namespace SolidDemo.Validations;
 internal class CurrentAccountValidation : IAccountValidation

@@ -1,6 +1,6 @@
-﻿using SolidDemo.Accounts;
+﻿using SolidDemo.Enums;
 
-namespace SolidDemo.Validations;
+namespace SolidDemo.Interfaces;
 internal interface IAccountValidation
 {
     AccountType AccountType { get; }

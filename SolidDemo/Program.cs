@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolidDemo.Accounts;
+using SolidDemo.Interfaces;
+using SolidDemo.Services;
 using SolidDemo.Validations;
 
 namespace SolidDemo;

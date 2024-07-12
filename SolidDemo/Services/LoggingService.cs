@@ -1,4 +1,6 @@
-﻿namespace SolidDemo;
+﻿using SolidDemo.Interfaces;
+
+namespace SolidDemo.Services;
 
 internal class LoggingService : ILoggingService
 {

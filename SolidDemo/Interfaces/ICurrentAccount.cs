@@ -1,4 +1,4 @@
-﻿namespace SolidDemo.Accounts;
+﻿namespace SolidDemo.Interfaces;
 
 internal interface ICurrentAccount : IAccount
 {

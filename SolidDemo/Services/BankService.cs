@@ -1,9 +1,7 @@
-﻿
+﻿using SolidDemo.Enums;
+using SolidDemo.Interfaces;
 
-using SolidDemo.Accounts;
-using SolidDemo.Validations;
-
-namespace SolidDemo;
+namespace SolidDemo.Services;
 
 internal class BankService : IBankService
 {
