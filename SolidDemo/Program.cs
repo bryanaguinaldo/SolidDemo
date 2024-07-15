@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SolidDemo.Accounts;
+using SolidDemo.BankAccounts.Accounts;
 using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.BankAccounts.Validations;
