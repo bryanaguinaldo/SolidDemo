@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolidDemo.Loan_Accounts.Interfaces
+namespace SolidDemo.LoanAccounts.Interfaces
 {
     internal interface IPersonalLoan
     {

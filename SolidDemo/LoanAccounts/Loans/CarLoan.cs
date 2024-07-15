@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolidDemo.Loan_Accounts.Interfaces
+namespace SolidDemo.LoanAccounts.Loans
 {
-    internal interface ICarLoan
+    internal class CarLoan
     {
     }
 }

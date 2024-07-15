@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Loan Accounts\Enums\" />
+    <Folder Include="LoanAccounts\Enums\" />
   </ItemGroup>
 
 </Project>
