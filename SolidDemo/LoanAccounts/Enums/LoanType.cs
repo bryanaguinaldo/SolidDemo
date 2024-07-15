@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolidDemo.LoanAccounts.Interfaces
+namespace SolidDemo.LoanAccounts.Enums
 {
-    internal interface IPersonalLoan : ILoan
+    internal enum LoanType
     {
+        PersonalLoan,
+        CarLoan,
+        HomeLoan
     }
 }

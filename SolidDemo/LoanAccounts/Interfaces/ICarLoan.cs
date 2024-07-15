@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SolidDemo.LoanAccounts.Interfaces;
 
 namespace SolidDemo.LoanAccounts.Interfaces
 {
-    internal interface ICarLoan
+    internal interface ICarLoan : ILoan
     {
     }
 }
