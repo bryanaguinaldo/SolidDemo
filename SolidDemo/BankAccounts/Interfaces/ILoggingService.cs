@@ -1,4 +1,4 @@
-﻿namespace SolidDemo.Interfaces;
+﻿namespace SolidDemo.BankAccounts.Interfaces;
 
 internal interface ILoggingService
 {

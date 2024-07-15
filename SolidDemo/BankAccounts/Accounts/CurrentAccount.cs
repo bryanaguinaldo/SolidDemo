@@ -1,7 +1,7 @@
-﻿using SolidDemo.Enums;
-using SolidDemo.Interfaces;
+﻿using SolidDemo.BankAccounts.Enums;
+using SolidDemo.BankAccounts.Interfaces;
 
-namespace SolidDemo.Accounts;
+namespace SolidDemo.BankAccounts.Accounts;
 internal class CurrentAccount(int accountId, decimal balance, decimal overDraft) :
     Account(accountId, balance), ICurrentAccount
 {

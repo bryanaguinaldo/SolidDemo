@@ -1,7 +1,7 @@
-﻿using SolidDemo.Enums;
-using SolidDemo.Interfaces;
+﻿using SolidDemo.BankAccounts.Enums;
+using SolidDemo.BankAccounts.Interfaces;
 
-namespace SolidDemo.Validations;
+namespace SolidDemo.BankAccounts.Validations;
 
 internal class SavingsAccountValidation : IAccountValidation
 {

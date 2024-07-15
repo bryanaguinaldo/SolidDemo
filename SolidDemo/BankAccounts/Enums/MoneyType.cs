@@ -1,4 +1,4 @@
-﻿namespace SolidDemo.Enums;
+﻿namespace SolidDemo.BankAccounts.Enums;
 
 internal enum MoneyType
 {
