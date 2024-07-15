@@ -25,10 +25,42 @@ internal class Program
 
         var bankService = serviceProvider.GetRequiredService<IBankService>();
 
+        Console.WriteLine("");
         Console.WriteLine("Welcome to CPQ Manila Bank");
         Console.WriteLine("");
 
-        string accountId = GetValidAccountId();
+        Login(out var customerFullName);
+
+        Console.WriteLine("");
+        Console.WriteLine($"Welcome, {customerFullName}!");
+        Console.WriteLine("");
+
+        var savingsAccount = new SavingsAccount(1001, 500.00m);
+        var currentAccount = new CurrentAccount(1002, 500.00m, 100m);
+        var timeDepositAccount = new TimeDepositAccount(1003, 500m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30);
+        var dollarAccount = new DollarAccount(1004, 500.00m, MoneyType.Dollar);
+
+        var customer = new Customer(1, customerFullName, new List<IAccount>
+        {
+            savingsAccount,
+            currentAccount,
+            timeDepositAccount,
+            dollarAccount
+        });
+
+        ServiceOptions();
+
+        bankService.Withdraw(customer, 1001, 100.00m);
+        bankService.Withdraw(customer, 1002, 600.00m);
+        bankService.Withdraw(customer, 1003, 300m);
+        bankService.Withdraw(customer, 1004, 200m);
+
+        Console.ReadLine();
+    }
+
+    static void Login(out string fullName)
+    {
+        string accountId = GetValidAccountId()!;
 
         if (accountId == null)
         {
@@ -48,31 +80,7 @@ internal class Program
             Environment.Exit(0);
         }
 
-        var customerFullName = CustomerData.Information[accountId].FullName;
-
-        Console.WriteLine($"Welcome, {customerFullName}!");
-        Console.WriteLine("");
-
-        var savingsAccount = new SavingsAccount(1001, 500.00m);
-        var currentAccount = new CurrentAccount(1002, 500.00m, 100m);
-        var timeDepositAccount = new TimeDepositAccount(1003, 500m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30);
-        var dollarAccount = new DollarAccount(1004, 500.00m, MoneyType.Dollar);
-
-        var customer = new Customer(1, customerFullName, new List<IAccount>
-        {
-            savingsAccount,
-            currentAccount,
-            timeDepositAccount,
-            dollarAccount
-        });
-
-
-        bankService.Withdraw(customer, 1001, 100.00m);
-        bankService.Withdraw(customer, 1002, 600.00m);
-        bankService.Withdraw(customer, 1003, 300m);
-        bankService.Withdraw(customer, 1004, 200m);
-
-        Console.ReadLine();
+        fullName = CustomerData.Information[accountId].FullName!;
     }
 
     static string? GetValidAccountId()
@@ -113,5 +121,39 @@ internal class Program
         }
 
         return false;
+    }
+
+    static void ServiceOptions()
+    {
+        Console.WriteLine("1. Bank Account Services");
+        Console.WriteLine("2. Loan Account Services");
+        Console.Write("Choose: ");
+
+        while (true)
+        {
+            string serviceOption = Console.ReadLine();
+
+            if (serviceOption == "1")
+                PerformBankAccountOperations();
+            else if (serviceOption == "2")
+                PerformLoanAccountOperations();
+            else
+                Console.Write("Invalid option. Choose again: ");
+        }
+    }
+
+    static void PerformBankAccountOperations()
+    {
+
+    }
+
+    static void PerformLoanAccountOperations()
+    {
+
+    }
+
+    static void InitializeBankAccounts()
+    {
+
     }
 }
