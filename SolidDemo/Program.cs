@@ -29,7 +29,7 @@ internal class Program
         Console.WriteLine("Welcome to CPQ Manila Bank");
         Console.WriteLine("");
 
-        Login(out var customerFullName);
+        Login(out var customerFullName, out var customerId);
 
         Console.WriteLine("");
         Console.WriteLine($"Welcome, {customerFullName}!");
@@ -48,7 +48,7 @@ internal class Program
             dollarAccount
         });
 
-        ServiceOptions();
+        ServiceOptions(customerFullName, customerId);
 
         bankService.Withdraw(customer, 1001, 100.00m);
         bankService.Withdraw(customer, 1002, 600.00m);
@@ -58,11 +58,11 @@ internal class Program
         Console.ReadLine();
     }
 
-    static void Login(out string fullName)
+    static void Login(out string fullName, out string customerId)
     {
-        string accountId = GetValidAccountId()!;
+        customerId = GetValidAccountId()!;
 
-        if (accountId == null)
+        if (customerId == null)
         {
             Console.WriteLine("Too many incorrect attempts. Exiting...");
             Console.ReadLine();
@@ -70,7 +70,7 @@ internal class Program
             Environment.Exit(0);
         }
 
-        bool isValid = PerformPasswordValidation(accountId);
+        bool isValid = PerformPasswordValidation(customerId);
 
         if (!isValid)
         {
@@ -80,7 +80,7 @@ internal class Program
             Environment.Exit(0);
         }
 
-        fullName = CustomerData.Information[accountId].FullName!;
+        fullName = CustomerData.Information[customerId].FullName!;
     }
 
     static string? GetValidAccountId()
@@ -103,7 +103,7 @@ internal class Program
         return null;
     }
 
-    static bool PerformPasswordValidation(string accountId)
+    static bool PerformPasswordValidation(string customerId)
     {
         int attempts = 0;
 
@@ -112,7 +112,7 @@ internal class Program
             Console.Write("\nEnter your password: ");
             string password = Console.ReadLine()!;
 
-            if (CustomerData.Information[accountId].Password == password)
+            if (CustomerData.Information[customerId].Password == password)
                 return true;
 
             attempts++;
@@ -123,7 +123,7 @@ internal class Program
         return false;
     }
 
-    static void ServiceOptions()
+    static void ServiceOptions(string customerFullName, string customerId)
     {
         Console.WriteLine("1. Bank Account Services");
         Console.WriteLine("2. Loan Account Services");
@@ -131,10 +131,10 @@ internal class Program
 
         while (true)
         {
-            string serviceOption = Console.ReadLine();
+            var serviceOption = Console.ReadLine();
 
             if (serviceOption == "1")
-                PerformBankAccountOperations();
+                PerformBankAccountOperations(customerFullName, customerId);
             else if (serviceOption == "2")
                 PerformLoanAccountOperations();
             else
@@ -142,9 +142,81 @@ internal class Program
         }
     }
 
-    static void PerformBankAccountOperations()
+    static void PerformBankAccountOperations(string customerFullName, string customerId)
     {
+        int id = int.Parse(customerId);
+        var savingsAccount = new SavingsAccount(1001, 500.00m);
+        var currentAccount = new CurrentAccount(1002, 500.00m, 100m);
 
+        var serviceCollection = new ServiceCollection();
+
+        serviceCollection.AddScoped<ILoggingService, LoggingService>();
+        serviceCollection.AddScoped<IBankService, BankService>();
+        serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
+        serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
+
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        var bankService = serviceProvider.GetRequiredService<IBankService>();
+
+        var customer = new Customer(id, customerFullName, new List<IAccount>
+        {
+            savingsAccount,
+            currentAccount,
+        });
+
+        string? accountOption;
+        string? actionOption;
+
+        Console.WriteLine("1. Savings Account");
+        Console.WriteLine("2. Current Account");
+        Console.Write("Choose: ");
+
+        while (true)
+        {
+            accountOption = Console.ReadLine();
+            if (accountOption == "1" || accountOption == "2") break;
+            else Console.Write("Invalid option. Choose again: ");
+        }
+
+        Console.WriteLine("1. Withdraw");
+        Console.WriteLine("2. Deposit");
+        Console.Write("Choose: ");
+
+        while (true)
+        {
+            actionOption = Console.ReadLine();
+            if (actionOption == "1" || actionOption == "2") break;
+            else Console.Write("Invalid option. Choose again: ");
+        }
+
+        Console.Write("Amount: ");
+
+        decimal amount;
+
+        while (!decimal.TryParse(Console.ReadLine(), out amount)) {
+            Console.Write("Invalid amount. Enter again: ");
+        }
+
+        // Putting this here for readability before clean up
+        var accountType = accountOption == "1" ? AccountType.Savings : AccountType.Current;
+        var actionType = actionOption == "1" ? "Withdraw" : "Deposit";
+
+        if (accountType == AccountType.Savings)
+        {
+            if (actionType == "Withdraw") bankService.Withdraw(customer, savingsAccount.AccountId, amount);
+            else bankService.Deposit(customer, savingsAccount.AccountId, amount);
+        }
+        else
+        {
+            if (actionType == "Withdraw") bankService.Withdraw(customer, currentAccount.AccountId, amount);
+            else bankService.Deposit(customer, currentAccount.AccountId, amount);
+        }
+
+        Console.WriteLine("Thank you for using CPQ Manila Bank!");
+        Console.ReadLine();
+
+        Environment.Exit(0);
     }
 
     static void PerformLoanAccountOperations()
