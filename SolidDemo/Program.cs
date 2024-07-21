@@ -5,7 +5,6 @@ using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.BankAccounts.Validations;
 using SolidDemo.Data;
 using SolidDemo.Services;
-using System.Runtime.CompilerServices;
 
 namespace SolidDemo;
 
@@ -13,19 +12,6 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var serviceCollection = new ServiceCollection();
-
-        serviceCollection.AddScoped<ILoggingService, LoggingService>();
-        serviceCollection.AddScoped<IBankService, BankService>();  
-        serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
-        serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
-        serviceCollection.AddScoped<IAccountValidation, TimeDepositValidation>();
-        serviceCollection.AddScoped<IAccountValidation, DollarAccountValidation>();
-
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-
-        var bankService = serviceProvider.GetRequiredService<IBankService>();
-
         Console.WriteLine("");
         Console.WriteLine("Welcome to CPQ Manila Bank");
         Console.WriteLine("");
@@ -36,25 +22,7 @@ internal class Program
         Console.WriteLine($"Welcome, {customerFullName}!");
         Console.WriteLine("");
 
-        var savingsAccount = new SavingsAccount(1001, 500.00m);
-        var currentAccount = new CurrentAccount(1002, 500.00m, 100m);
-        var timeDepositAccount = new TimeDepositAccount(1003, 500m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30);
-        var dollarAccount = new DollarAccount(1004, 500.00m, MoneyType.Dollar);
-
-        var customer = new Customer(1, customerFullName, new List<IAccount>
-        {
-            savingsAccount,
-            currentAccount,
-            timeDepositAccount,
-            dollarAccount
-        });
-
         ServiceOptions(customerFullName, customerId);
-
-        bankService.Withdraw(customer, 1001, 100.00m);
-        bankService.Withdraw(customer, 1002, 600.00m);
-        bankService.Withdraw(customer, 1003, 300m);
-        bankService.Withdraw(customer, 1004, 200m);
 
         Console.ReadLine();
     }
@@ -145,20 +113,15 @@ internal class Program
 
     static void PerformBankAccountOperations(string customerFullName, string customerId)
     {
-        int id = int.Parse(customerId);
+        // Need to clean this up
+        InitializeBankAccounts(out var serviceCollection);
+
         var savingsAccount = new SavingsAccount(1001, 50000.00m);
         var currentAccount = new CurrentAccount(1002, 50000.00m, 5000m);
         var timeDepositAccount = new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30);
         var dollarAccount = new DollarAccount(1004, 50000.00m, MoneyType.Dollar);
 
-        var serviceCollection = new ServiceCollection();
-
-        serviceCollection.AddScoped<ILoggingService, LoggingService>();
-        serviceCollection.AddScoped<IBankService, BankService>();
-        serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
-        serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
-        serviceCollection.AddScoped<IAccountValidation, TimeDepositValidation>();
-        serviceCollection.AddScoped<IAccountValidation, DollarAccountValidation>();
+        int id = int.Parse(customerId);
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -230,8 +193,15 @@ internal class Program
 
     }
 
-    static void InitializeBankAccounts()
+    static void InitializeBankAccounts(out ServiceCollection serviceCollection)
     {
+        serviceCollection = new ServiceCollection();
 
+        serviceCollection.AddScoped<ILoggingService, LoggingService>();
+        serviceCollection.AddScoped<IBankService, BankService>();
+        serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
+        serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
+        serviceCollection.AddScoped<IAccountValidation, TimeDepositValidation>();
+        serviceCollection.AddScoped<IAccountValidation, DollarAccountValidation>();
     }
 }
