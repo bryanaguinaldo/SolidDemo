@@ -146,8 +146,10 @@ internal class Program
     static void PerformBankAccountOperations(string customerFullName, string customerId)
     {
         int id = int.Parse(customerId);
-        var savingsAccount = new SavingsAccount(1001, 500.00m);
-        var currentAccount = new CurrentAccount(1002, 500.00m, 100m);
+        var savingsAccount = new SavingsAccount(1001, 50000.00m);
+        var currentAccount = new CurrentAccount(1002, 50000.00m, 5000m);
+        var timeDepositAccount = new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30);
+        var dollarAccount = new DollarAccount(1004, 50000.00m, MoneyType.Dollar);
 
         var serviceCollection = new ServiceCollection();
 
@@ -155,28 +157,39 @@ internal class Program
         serviceCollection.AddScoped<IBankService, BankService>();
         serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
         serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
+        serviceCollection.AddScoped<IAccountValidation, TimeDepositValidation>();
+        serviceCollection.AddScoped<IAccountValidation, DollarAccountValidation>();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var bankService = serviceProvider.GetRequiredService<IBankService>();
-
-        var customer = new Customer(id, customerFullName, new List<IAccount>
+        var accountList = new List<IAccount>
         {
             savingsAccount,
             currentAccount,
-        });
+            timeDepositAccount,
+            dollarAccount
+        };
+
+        var bankService = serviceProvider.GetRequiredService<IBankService>();
+
+        var customer = new Customer(id, customerFullName, accountList);
 
         string? accountOption;
         string? actionOption;
+        int account;
+        int action;
 
         Console.WriteLine("1. Savings Account");
         Console.WriteLine("2. Current Account");
+        Console.WriteLine("3. Time Deposit Account");
+        Console.WriteLine("4. Dollar Account");
         Console.Write("Choose: ");
 
         while (true)
         {
             accountOption = Console.ReadLine();
-            if (accountOption == "1" || accountOption == "2") break;
+            var result = int.TryParse(accountOption, out account);
+            if (result && account >= 1 && account <= 4) break;
             else Console.Write("Invalid option. Choose again: ");
         }
 
@@ -187,7 +200,8 @@ internal class Program
         while (true)
         {
             actionOption = Console.ReadLine();
-            if (actionOption == "1" || actionOption == "2") break;
+            var result = int.TryParse(actionOption, out action);
+            if (result && action >= 1 && action <= 2) break; 
             else Console.Write("Invalid option. Choose again: ");
         }
 
@@ -200,19 +214,10 @@ internal class Program
         }
 
         // Putting this here for readability before clean up
-        var accountType = accountOption == "1" ? AccountType.Savings : AccountType.Current;
         var actionType = actionOption == "1" ? "Withdraw" : "Deposit";
 
-        if (accountType == AccountType.Savings)
-        {
-            if (actionType == "Withdraw") bankService.Withdraw(customer, savingsAccount.AccountId, amount);
-            else bankService.Deposit(customer, savingsAccount.AccountId, amount);
-        }
-        else
-        {
-            if (actionType == "Withdraw") bankService.Withdraw(customer, currentAccount.AccountId, amount);
-            else bankService.Deposit(customer, currentAccount.AccountId, amount);
-        }
+        if (actionType == "Withdraw") bankService.Withdraw(customer, accountList[account - 1].AccountId, amount);
+        else bankService.Deposit(customer, accountList[account].AccountId, amount);
 
         Console.WriteLine("Thank you for using CPQ Manila Bank!");
         Console.ReadLine();
