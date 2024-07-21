@@ -217,7 +217,7 @@ internal class Program
         var actionType = actionOption == "1" ? "Withdraw" : "Deposit";
 
         if (actionType == "Withdraw") bankService.Withdraw(customer, accountList[account - 1].AccountId, amount);
-        else bankService.Deposit(customer, accountList[account].AccountId, amount);
+        else bankService.Deposit(customer, accountList[account - 1].AccountId, amount);
 
         Console.WriteLine("Thank you for using CPQ Manila Bank!");
         Console.ReadLine();
