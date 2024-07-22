@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
-using SolidDemo.Data;
 using SolidDemo.Enums;
 using SolidDemo.Interfaces;
 using SolidDemo.LoanAccounts.Enums;
