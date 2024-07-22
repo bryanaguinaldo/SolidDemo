@@ -12,12 +12,14 @@ namespace SolidDemo;
 
 public class SolidDemo : BaseDemo
 {
+    private readonly ILoginService _loginService;
     private readonly IBankService _bankService;
     private readonly ILoanService _loanService;
     private readonly ILoggingService _loggingService;
 
     public SolidDemo()
     {
+        _loginService = ServiceProvider.GetRequiredService<ILoginService>();
         _bankService = ServiceProvider.GetRequiredService<IBankService>();
         _loanService = ServiceProvider.GetRequiredService<ILoanService>();
         _loggingService = ServiceProvider.GetRequiredService<ILoggingService>();
@@ -30,9 +32,10 @@ public class SolidDemo : BaseDemo
     {
         _loggingService.LogMessage("\nWelcome to CPQ Manila Bank\n");
 
-        Login(out var id, out var userInformation);
+        Login(out var customerId);
 
-        customer = new Customer(id, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
+        var userInformation = _loginService.GetUserInformation(customerId);
+        customer = new Customer(customerId, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
 
         _loggingService.LogMessage($"\nWelcome, {userInformation.FullName}!");
 
@@ -41,7 +44,7 @@ public class SolidDemo : BaseDemo
         Console.ReadLine();
     }
 
-    private void Login(out int customerId, out UserInformation userInformation)
+    private void Login(out int customerId)
     {
         customerId = GetValidAccountId()!;
 
@@ -52,18 +55,16 @@ public class SolidDemo : BaseDemo
 
         if (!isValid)
             ExitWithMessage("Too many incorrect attempts. Exiting...");
-
-        userInformation = CustomerData.Information[customerId!];
     }
 
     private int GetValidAccountId()
     {
         for (int attempts = 0; attempts < MaxAttempts; attempts++)
         {
-            Console.Write("\nEnter your account ID to proceed: ");
-            int.TryParse(Console.ReadLine()!, out var input);
+            var customerId = _loggingService.GetInput("\nEnter your customer ID to proceed: ");
+            int.TryParse(customerId, out var input);
 
-            if (CustomerData.Information.ContainsKey(input))
+            if (_loginService.IsCustomerIdValid(input))
                 return input;
 
             _loggingService.LogMessage($"No account ID ({input}) found. Please enter again.");
@@ -76,10 +77,9 @@ public class SolidDemo : BaseDemo
     {
         for (int attempts = 0; attempts < MaxAttempts; attempts++)
         {
-            Console.Write("\nEnter your password: ");
-            string password = Console.ReadLine()!;
+            var password = _loggingService.GetInput("\nEnter your password: ");
 
-            if (CustomerData.Information[customerId].Password == password)
+            if (_loginService.IsPasswordValid(customerId, password!))
                 return true;
 
             _loggingService.LogMessage("Wrong password. Please try again.");
