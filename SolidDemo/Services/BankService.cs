@@ -25,7 +25,7 @@ internal class BankService : IBankService
         if (accountValidation.IsValid(account, amount))
         {
             account.Deposit(amount);
-            _loggingService.LogMessage($"Deposit of {amount} successful. New balance: {account.Balance}");
+            _loggingService.LogMessage($"Deposit of {amount} successful. New balance: {Math.Round(account.Balance)}");
         }
         else
         {
@@ -46,7 +46,7 @@ internal class BankService : IBankService
         if (accountValidation.IsValid(account, amount))
         {
             account.Withdraw(amount);
-            _loggingService.LogMessage($"Withdrawal of {amount} successful. New balance: {account.Balance}");
+            _loggingService.LogMessage($"Withdrawal of {amount} successful. New balance: {Math.Round(account.Balance)}");
         }
         else
         {

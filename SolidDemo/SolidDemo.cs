@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.Data;
 using SolidDemo.Enums;
@@ -160,11 +161,42 @@ public class SolidDemo : BaseDemo
             Console.Write("Invalid amount. Enter again: ");
         }
 
+        var account = customer.Accounts.First(s => s.AccountId == accountId);
+
+        if (account.AccountType == AccountType.Dollar)
+        {
+            Console.WriteLine();
+            Console.WriteLine("1. Money (dollar)");
+            Console.WriteLine("2. Money (peso)");
+            Console.WriteLine();
+            Console.Write("Choose: ");
+
+            while (true)
+            {
+                int.TryParse(Console.ReadLine(), out var input);
+
+                if (input > 0 && input < 3)
+                {
+                    if (account is IDollarAccount dollarAccount)
+                        dollarAccount.MoneyType = (MoneyType)(input - 1);
+
+                    break;
+                }
+                else
+                {
+                    Console.Write("Invalid option. Choose again: ");
+                }
+            }
+        }
+
+        Console.WriteLine();
+
         if (bankServiceAction == BankServiceType.Deposit)
             _bankService.Deposit(customer, accountId, amount);
         else if (bankServiceAction == BankServiceType.Widthdraw)
             _bankService.Withdraw(customer, accountId, amount);
 
+        Console.WriteLine();
         Console.Write("Do you want to transact again? (Y or N): ");
         var needTransaction = Console.ReadLine();
 

@@ -26,7 +26,7 @@ public static class CustomerData
                     new SavingsAccount(1001, 50000.00m),
                     new CurrentAccount(1002, 50000.00m, 5000m),
                     new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30),
-                    new DollarAccount(1004, 50000.00m, MoneyType.Dollar)
+                    new DollarAccount(1004, 50000.00m)
                 }
             } 
         },
@@ -41,7 +41,22 @@ public static class CustomerData
                     new SavingsAccount(1001, 50000.00m),
                     new CurrentAccount(1002, 50000.00m, 5000m),
                     new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30),
-                    new DollarAccount(1004, 50000.00m, MoneyType.Dollar)
+                    new DollarAccount(1004, 50000.00m)
+                }
+            }
+        },
+        {
+            1003,
+            new UserInformation
+            {
+                FullName = "Jeanson Avenilla",
+                Password = "CPQ",
+                AccountList = new List<IAccount>
+                {
+                    new SavingsAccount(1001, 50000.00m),
+                    new CurrentAccount(1002, 50000.00m, 5000m),
+                    new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30),
+                    new DollarAccount(1004, 50000.00m)
                 }
             }
         }

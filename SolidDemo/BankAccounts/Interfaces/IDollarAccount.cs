@@ -4,5 +4,5 @@ namespace SolidDemo.BankAccounts.Interfaces;
 
 internal interface IDollarAccount : IAccount
 {
-    MoneyType MoneyType { get; }
+    MoneyType MoneyType { get; set; }
 }

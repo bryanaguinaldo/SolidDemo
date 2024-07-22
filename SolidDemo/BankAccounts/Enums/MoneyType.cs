@@ -2,6 +2,6 @@
 
 internal enum MoneyType
 {
-    Peso,
-    Dollar
+    Dollar,
+    Peso
 }
