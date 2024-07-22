@@ -1,4 +1,5 @@
 ﻿using SolidDemo.Interfaces;
+using SolidDemo.LoanAccounts.Interfaces;
 
 namespace SolidDemo.Services;
 
@@ -10,6 +11,8 @@ public class LoanService : ILoanService
     {
         _loggingService = loggingService;
     }
+
+    public void AddLoan(Customer customer, ILoan loan) => customer.Loans.Add(loan);
 
     public void DisplayLoanDetails(Customer customer)
     {

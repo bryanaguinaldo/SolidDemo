@@ -281,7 +281,7 @@ public class SolidDemo : BaseDemo
 
         if (proceed is "Y" or "y")
         {
-            customer.Loans.Add(loan);
+            _loanService.AddLoan(customer, loan);
             _loanService.DisplayLoanDetails(customer);
             Console.WriteLine($"Successfully creating {loanOption.ToString()} loan account.");
         }
