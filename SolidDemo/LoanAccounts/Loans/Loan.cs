@@ -13,7 +13,7 @@ namespace SolidDemo.LoanAccounts.Loans
         public decimal TotalAmount() => Math.Round(LoanAmount * (decimal)Math.Pow(1 + (interestRate / 100), Convert.ToDouble(duration)), 2);
         public decimal MonthlyAmortization() => Math.Round(TotalAmount() / (duration * 12), 2);
 
-        public void OutputMessage()
+        public virtual void OutputMessage()
         {
             Console.WriteLine();
             Console.WriteLine("Loan Details");

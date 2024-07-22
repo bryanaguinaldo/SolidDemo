@@ -12,7 +12,12 @@ public class LoanService : ILoanService
         _loggingService = loggingService;
     }
 
-    public void AddLoan(Customer customer, ILoan loan) => customer.Loans.Add(loan);
+    public void AddLoan(Customer customer, ILoan loan)
+    {
+        customer.Loans.Add(loan);
+        DisplayLoanDetails(customer);
+        _loggingService.LogMessage($"Successfully creating {loan.LoanType} loan account.");
+    }
 
     public void DisplayLoanDetails(Customer customer)
     {

@@ -280,15 +280,9 @@ public class SolidDemo : BaseDemo
         var proceed = _loggingService.GetInput("Proceed to loan (Y or N): ");
 
         if (proceed is "Y" or "y")
-        {
             _loanService.AddLoan(customer, loan);
-            _loanService.DisplayLoanDetails(customer);
-            _loggingService.LogMessage($"Successfully creating {loanOption.ToString()} loan account.");
-        }
         else
-        {
             _loggingService.LogMessage("Cancelling loan request...");
-        }
 
         _loggingService.LogMessage();
         var needTransaction = _loggingService.GetInput("Do you want to transact again? (Y or N): ");
