@@ -20,7 +20,7 @@ internal class BankService : IBankService
         var account = customer.GetBankAccount(accountId);
 
         if (!_accountValidations.TryGetValue(account.AccountType, out var accountValidation))
-            throw new ArgumentException("Account type {account} is not Valid");
+            throw new ArgumentException($"Account type {account} is not Valid");
 
         if (accountValidation.IsValid(account, amount))
         {
@@ -41,7 +41,7 @@ internal class BankService : IBankService
         var account = customer.GetBankAccount(accountId);
 
         if (!_accountValidations.TryGetValue(account.AccountType, out var accountValidation))
-            throw new ArgumentException("Account type {account} is not Valid");
+            throw new ArgumentException($"Account type {account} is not Valid");
 
         if (accountValidation.IsValid(account, amount))
         {
