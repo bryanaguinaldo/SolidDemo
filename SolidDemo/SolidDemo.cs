@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design;
-using Microsoft.Extensions.DependencyInjection;
-using SolidDemo.BankAccounts.Accounts;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.Data;
