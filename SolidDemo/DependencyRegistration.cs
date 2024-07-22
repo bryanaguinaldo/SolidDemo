@@ -8,11 +8,23 @@ namespace SolidDemo
 {
     public static class DependencyRegistration
     {
-        public static IServiceCollection RegisterBankAccountServices(this IServiceCollection serviceCollection)
+        public static IServiceCollection RegisterLoginServices(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<ILoginService, LoginService>();
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection RegisterLoggingServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<ILoggingService, LoggingService>();
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection RegisterBankAccountServices(this IServiceCollection serviceCollection)
+        {
             serviceCollection.AddScoped<IBankService, BankService>();
-            serviceCollection.AddScoped<ILoanService, LoanService>();
             serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
             serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
             serviceCollection.AddScoped<IAccountValidation, TimeDepositValidation>();
@@ -23,7 +35,9 @@ namespace SolidDemo
 
         public static IServiceCollection RegisterLoanAccountServices(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.AddScoped<ILoanService, LoanService>();
+            serviceCollection.AddScoped<ILoanService, LoanService>();
+
+            return serviceCollection;
         }
     }
 }

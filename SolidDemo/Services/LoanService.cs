@@ -39,7 +39,7 @@ public class LoanService : ILoanService
                 var monthlyPayment = loan.MonthlyAmortization().ToString();
                 var duration = loan.Duration.ToString();
 
-                _loggingService.LogMessage($"{loadId.PadRight(12)}{loanType.PadRight(17)}{($"P{totalAmount.PadRight(20)}")}{($"P{monthlyPayment}").PadRight(22)}{duration} years");
+                _loggingService.LogMessage($"{loadId.PadRight(12)}{loanType.PadRight(17)}{($"P{totalAmount}").PadRight(20)}{($"P{monthlyPayment}").PadRight(22)}{duration} years");
             }
 
             _loggingService.LogMessage("");
