@@ -204,8 +204,7 @@ public class SolidDemo : BaseDemo
             _bankService.Withdraw(customer, accountId, amount);
 
         _loggingService.LogMessage();
-        Console.Write("Do you want to transact again? (Y or N): ");
-        var needTransaction = Console.ReadLine();
+        var needTransaction = _loggingService.GetInput("Do you want to transact again? (Y or N): ");
 
         if (needTransaction is "Y" or "y")
             ServiceOptions();
@@ -278,8 +277,7 @@ public class SolidDemo : BaseDemo
         loan.OutputMessage();
 
         _loggingService.LogMessage();
-        Console.Write("Proceed to loan (Y or N): ");
-        var proceed = Console.ReadLine();
+        var proceed = _loggingService.GetInput("Proceed to loan (Y or N): ");
 
         if (proceed is "Y" or "y")
         {
@@ -293,8 +291,7 @@ public class SolidDemo : BaseDemo
         }
 
         _loggingService.LogMessage();
-        Console.Write("Do you want to transact again? (Y or N): ");
-        var needTransaction = Console.ReadLine();
+        var needTransaction = _loggingService.GetInput("Do you want to transact again? (Y or N): ");
 
         if (needTransaction is "Y" or "y")
             ServiceOptions();
