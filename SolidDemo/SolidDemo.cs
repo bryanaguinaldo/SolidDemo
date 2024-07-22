@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SolidDemo.BankAccounts.Accounts;
 using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.Data;
 using SolidDemo.Enums;
 using SolidDemo.Interfaces;
+using SolidDemo.LoanAccounts.Enums;
 
 namespace SolidDemo;
 
@@ -195,7 +197,7 @@ public class SolidDemo : BaseDemo
 
         if (bankServiceAction == BankServiceType.Deposit)
             _bankService.Deposit(customer, accountId, amount);
-        else if (bankServiceAction == BankServiceType.Widthdraw)
+        else if (bankServiceAction == BankServiceType.Withdraw)
             _bankService.Withdraw(customer, accountId, amount);
 
         Console.WriteLine();
@@ -210,12 +212,38 @@ public class SolidDemo : BaseDemo
 
     private void PerformLoanAccountOperations()
     {
+        LoanType loanOption = 0;
+
         Console.WriteLine();
         Console.WriteLine("1. Personal Loan");
         Console.WriteLine("2. Car Loan");
         Console.WriteLine("3. Home Loan");
+        Console.WriteLine("4. Display all Loan");
         Console.WriteLine();
         Console.Write("Choose: ");
+
+        while (true)
+        {
+            int.TryParse(Console.ReadLine(), out var input);
+
+            if (input > 0 && input < 5)
+            {
+                if (input == 4)
+                {
+
+                }
+                else
+                {
+
+                }
+
+                break;
+            }
+            else
+            {
+                Console.Write("Invalid option. Choose again: ");
+            }
+        }
     }
 
     private void ExitWithMessage(string message)

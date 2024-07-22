@@ -9,5 +9,5 @@ namespace SolidDemo.Enums;
 public enum BankServiceType
 {
     Deposit,
-    Widthdraw
+    Withdraw
 }

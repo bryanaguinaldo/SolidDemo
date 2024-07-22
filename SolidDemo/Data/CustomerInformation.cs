@@ -1,5 +1,4 @@
 ﻿using SolidDemo.BankAccounts.Accounts;
-using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.LoanAccounts.Interfaces;
 
