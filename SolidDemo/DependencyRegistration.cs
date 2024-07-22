@@ -20,5 +20,10 @@ namespace SolidDemo
 
             return serviceCollection;
         }
+
+        public static IServiceCollection RegisterLoanAccountServices(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection.AddScoped<ILoanService, LoanService>();
+        }
     }
 }

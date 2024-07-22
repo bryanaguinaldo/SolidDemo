@@ -8,6 +8,7 @@ public abstract class BaseDemo
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.RegisterBankAccountServices();
+        serviceCollection.RegisterLoanAccountServices();
 
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }
