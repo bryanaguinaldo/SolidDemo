@@ -218,6 +218,8 @@ public class SolidDemo : BaseDemo
         decimal amount = 0;
         decimal duration = 0;
 
+        var random = new Random().Next(5000, 9999);
+
         Console.WriteLine();
         Console.WriteLine("1. Personal Loan");
         Console.WriteLine("2. Car Loan");
@@ -265,11 +267,11 @@ public class SolidDemo : BaseDemo
         }
 
         if (loanOption == LoanType.PersonalLoan)
-            loan = new PersonalLoan(new Random().Next(5000, 9999), amount, duration);
+            loan = new PersonalLoan(random, amount, duration);
         if (loanOption == LoanType.CarLoan)
-            loan = new CarLoan(new Random().Next(5000, 9999), amount, duration);
+            loan = new CarLoan(random, amount, duration);
         if (loanOption == LoanType.HomeLoan)
-            loan = new HomeLoan(new Random().Next(5000, 9999), amount, duration);
+            loan = new HomeLoan(random, amount, duration);
 
         loan.OutputMessage();
 
