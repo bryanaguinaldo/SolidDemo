@@ -80,9 +80,7 @@ public class SolidDemo : BaseDemo
             string password = Console.ReadLine()!;
 
             if (CustomerData.Information[customerId].Password == password)
-            {
                 return true;
-            }
 
             _loggingService.LogMessage("Wrong password. Please try again.");
         }
@@ -96,18 +94,17 @@ public class SolidDemo : BaseDemo
         _loggingService.LogMessage("1. Bank Account Services");
         _loggingService.LogMessage("2. Loan Account Services");
         _loggingService.LogMessage();
-        Console.Write("Choose: ");
 
         while (true)
         {
-            var serviceOption = Console.ReadLine();
+            var serviceOption = _loggingService.GetInput("Choose: ");
 
             if (serviceOption == "1")
                 PerformBankAccountOperations();
             else if (serviceOption == "2")
                 PerformLoanAccountOperations();
             else
-                Console.Write("Invalid option. Choose again: ");
+                Console.Write("Invalid option. ");
         }
     }
 
@@ -123,21 +120,19 @@ public class SolidDemo : BaseDemo
         _loggingService.LogMessage("3. Time Deposit Account");
         _loggingService.LogMessage("4. Dollar Account");
         _loggingService.LogMessage();
-        Console.Write("Choose: ");
 
         while (true)
         {
-            int.TryParse(Console.ReadLine(), out var input);
+            var choose = _loggingService.GetInput("Choose: ");
+            int.TryParse(choose, out var input);
 
             if (input > 0 && input < 5)
             {
                 accountId = customer.Accounts.Where(s => (int)s.AccountType == (input - 1)).Select(s => s.AccountId).FirstOrDefault();
                 break;
             }
-            else
-            {
-                Console.Write("Invalid option. Choose again: ");
-            }
+
+            Console.Write("Invalid option. ");
         }
 
         _loggingService.LogMessage();
@@ -148,17 +143,16 @@ public class SolidDemo : BaseDemo
 
         while (true)
         {
-            int.TryParse(Console.ReadLine(), out var input);
+            var choose = _loggingService.GetInput("Choose: ");
+            int.TryParse(choose, out var input);
 
             if (input > 0 && input < 3)
             {
                 bankServiceAction = (BankServiceType)(input - 1);
                 break;
             }
-            else
-            {
-                Console.Write("Invalid option. Choose again: ");
-            }
+
+            Console.Write("Invalid option. ");
         }
 
         Console.Write("\nAmount: P");
@@ -176,11 +170,11 @@ public class SolidDemo : BaseDemo
             _loggingService.LogMessage("1. Money (dollar)");
             _loggingService.LogMessage("2. Money (peso)");
             _loggingService.LogMessage();
-            Console.Write("Choose: ");
 
             while (true)
             {
-                int.TryParse(Console.ReadLine(), out var input);
+                var choose = _loggingService.GetInput("Choose: ");
+                int.TryParse(choose, out var input);
 
                 if (input > 0 && input < 3)
                 {
@@ -189,10 +183,8 @@ public class SolidDemo : BaseDemo
 
                     break;
                 }
-                else
-                {
-                    Console.Write("Invalid option. Choose again: ");
-                }
+
+                Console.Write("Invalid option. ");
             }
         }
 
@@ -227,11 +219,11 @@ public class SolidDemo : BaseDemo
         _loggingService.LogMessage("3. Home Loan");
         _loggingService.LogMessage("4. Display all Loan");
         _loggingService.LogMessage();
-        Console.Write("Choose: ");
 
         while (true)
         {
-            int.TryParse(Console.ReadLine(), out var input);
+            var choose = _loggingService.GetInput("Choose: ");
+            int.TryParse(choose, out var input);
 
             if (input > 0 && input < 5)
             {
@@ -249,7 +241,7 @@ public class SolidDemo : BaseDemo
             }
             else
             {
-                Console.Write("Invalid option. Choose again: ");
+                Console.Write("Invalid option. ");
             }
         }
 
