@@ -10,7 +10,7 @@ internal class CurrentAccountValidation : IAccountValidation
     {
         if (account is ICurrentAccount currentAccount)
         {
-            var allowedAmountToWithdraw = currentAccount.OverDraft;
+            var allowedAmountToWithdraw = currentAccount.Balance + currentAccount.OverDraft;
 
             if (amount <= 0 || amount > allowedAmountToWithdraw)
                 return false;
