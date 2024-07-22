@@ -1,6 +1,6 @@
 ﻿using SolidDemo.BankAccounts.Enums;
 
-namespace SolidDemo.BankAccounts.Interfaces;
+namespace SolidDemo.Interfaces;
 
 internal interface IBankService
 {

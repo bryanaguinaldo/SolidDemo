@@ -1,5 +1,6 @@
 ﻿using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
+using SolidDemo.Interfaces;
 
 namespace SolidDemo.Services;
 
@@ -17,7 +18,7 @@ internal class BankService : IBankService
 
     public void Deposit(Customer customer, int accountId, decimal amount)
     {
-        var account = customer.GetAccount(accountId);
+        var account = customer.GetBankAccount(accountId);
 
         if (!_accountValidations.TryGetValue(account.AccountType, out var accountValidation))
             throw new ArgumentException("Account type {account} is not Valid");
@@ -38,7 +39,7 @@ internal class BankService : IBankService
 
     public void Withdraw(Customer customer, int accountId, decimal amount)
     {
-        var account = customer.GetAccount(accountId);
+        var account = customer.GetBankAccount(accountId);
 
         if (!_accountValidations.TryGetValue(account.AccountType, out var accountValidation))
             throw new ArgumentException("Account type {account} is not Valid");

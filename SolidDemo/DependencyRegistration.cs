@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.BankAccounts.Validations;
+using SolidDemo.Interfaces;
 using SolidDemo.Services;
 
 namespace SolidDemo
@@ -11,6 +12,7 @@ namespace SolidDemo
         {
             serviceCollection.AddScoped<ILoggingService, LoggingService>();
             serviceCollection.AddScoped<IBankService, BankService>();
+            serviceCollection.AddScoped<ILoanService, LoanService>();
             serviceCollection.AddScoped<IAccountValidation, SavingsAccountValidation>();
             serviceCollection.AddScoped<IAccountValidation, CurrentAccountValidation>();
             serviceCollection.AddScoped<IAccountValidation, TimeDepositValidation>();

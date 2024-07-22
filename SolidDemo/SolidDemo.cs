@@ -3,19 +3,21 @@ using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
 using SolidDemo.Data;
 using SolidDemo.Enums;
+using SolidDemo.Interfaces;
 
 namespace SolidDemo;
 
 public class SolidDemo : BaseDemo
 {
     private readonly IBankService _bankService;
+    private readonly ILoanService _loanService;
 
     public SolidDemo()
     {
         _bankService = ServiceProvider.GetRequiredService<IBankService>();
+        _loanService = ServiceProvider.GetRequiredService<ILoanService>();
     }
     
-    private int customerId;
     private Customer customer;
     private const int MaxAttempts = 3;
 
@@ -23,9 +25,9 @@ public class SolidDemo : BaseDemo
     {
         Console.WriteLine("\nWelcome to CPQ Manila Bank\n");
 
-        Login(out var userInformation);
+        Login(out var id, out var userInformation);
 
-        customer = new Customer(customerId, userInformation.FullName, userInformation.AccountList);
+        customer = new Customer(id, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
 
         Console.WriteLine($"\nWelcome, {userInformation.FullName}!");
 
@@ -34,7 +36,7 @@ public class SolidDemo : BaseDemo
         Console.ReadLine();
     }
 
-    private void Login(out UserInformation userInformation)
+    private void Login(out int customerId, out UserInformation userInformation)
     {
         customerId = GetValidAccountId()!;
 
@@ -161,9 +163,9 @@ public class SolidDemo : BaseDemo
             Console.Write("Invalid amount. Enter again: ");
         }
 
-        var account = customer.Accounts.First(s => s.AccountId == accountId);
+        var account = customer.GetBankAccount(accountId);
 
-        if (account.AccountType == AccountType.Dollar)
+        if (account.AccountType is AccountType.Dollar)
         {
             Console.WriteLine();
             Console.WriteLine("1. Money (dollar)");
@@ -208,7 +210,12 @@ public class SolidDemo : BaseDemo
 
     private void PerformLoanAccountOperations()
     {
-
+        Console.WriteLine();
+        Console.WriteLine("1. Personal Loan");
+        Console.WriteLine("2. Car Loan");
+        Console.WriteLine("3. Home Loan");
+        Console.WriteLine();
+        Console.Write("Choose: ");
     }
 
     private void ExitWithMessage(string message)

@@ -1,10 +1,10 @@
 ﻿using SolidDemo.LoanAccounts.Enums;
 
-namespace SolidDemo.LoanAccounts.Interfaces
+namespace SolidDemo.LoanAccounts.Interfaces;
+
+public interface ILoan
 {
-    internal interface ILoan
-    {
-        public decimal TotalAmount();
-        LoanType LoanType { get; }
-    }
+    int LoanId { get; }
+    decimal TotalAmount();
+    LoanType LoanType { get; }
 }

@@ -1,4 +1,4 @@
-﻿using SolidDemo.BankAccounts.Interfaces;
+﻿using SolidDemo.Interfaces;
 
 namespace SolidDemo.Services;
 
