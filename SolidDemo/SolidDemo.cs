@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.ComponentModel.Design;
+using Microsoft.Extensions.DependencyInjection;
 using SolidDemo.BankAccounts.Accounts;
 using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
@@ -6,6 +7,8 @@ using SolidDemo.Data;
 using SolidDemo.Enums;
 using SolidDemo.Interfaces;
 using SolidDemo.LoanAccounts.Enums;
+using SolidDemo.LoanAccounts.Interfaces;
+using SolidDemo.LoanAccounts.Loans;
 
 namespace SolidDemo;
 
@@ -158,11 +161,11 @@ public class SolidDemo : BaseDemo
             }
         }
 
-        Console.Write("\nAmount: ");
+        Console.Write("\nAmount: P");
 
         while (!decimal.TryParse(Console.ReadLine(), out amount))
         {
-            Console.Write("Invalid amount. Enter again: ");
+            Console.Write("Invalid amount. Enter again: P");
         }
 
         var account = customer.GetBankAccount(accountId);
@@ -212,7 +215,10 @@ public class SolidDemo : BaseDemo
 
     private void PerformLoanAccountOperations()
     {
+        ILoan loan = null;
         LoanType loanOption = 0;
+        decimal amount = 0;
+        int duration = 0;
 
         Console.WriteLine();
         Console.WriteLine("1. Personal Loan");
@@ -230,11 +236,12 @@ public class SolidDemo : BaseDemo
             {
                 if (input == 4)
                 {
-
+                    _loanService.DisplayLoanDetails(customer);
+                    PerformLoanAccountOperations();
                 }
                 else
                 {
-
+                    loanOption = (LoanType)(input - 1);
                 }
 
                 break;
@@ -244,6 +251,53 @@ public class SolidDemo : BaseDemo
                 Console.Write("Invalid option. Choose again: ");
             }
         }
+
+        Console.Write("\nAmount: P");
+
+        while (!decimal.TryParse(Console.ReadLine(), out amount))
+        {
+            Console.Write("Invalid amount. Enter again: P");
+        }
+
+        Console.Write("\nDuration (months): ");
+
+        while (!int.TryParse(Console.ReadLine(), out duration))
+        {
+            Console.Write("Invalid amount. Enter again: ");
+        }
+
+        if (loanOption == LoanType.PersonalLoan)
+            loan = new PersonalLoan(new Random().Next(5000, 9999), amount, duration);
+        if (loanOption == LoanType.CarLoan)
+            loan = new CarLoan(new Random().Next(5000, 9999), amount, duration);
+        if (loanOption == LoanType.HomeLoan)
+            loan = new HomeLoan(new Random().Next(5000, 9999), amount, duration);
+
+        loan.OutputMessage();
+
+        Console.WriteLine();
+        Console.Write("Proceed to loan (Y or N): ");
+        var proceed = Console.ReadLine();
+
+        if (proceed is "Y" or "y")
+        {
+            customer.Loans.Add(loan);
+            _loanService.DisplayLoanDetails(customer);
+            Console.WriteLine($"Successfully creating {loanOption.ToString()} loan account.");
+        }
+        else
+        {
+            Console.WriteLine("Cancelling loan request...");
+        }
+
+        Console.WriteLine();
+        Console.Write("Do you want to transact again? (Y or N): ");
+        var needTransaction = Console.ReadLine();
+
+        if (needTransaction is "Y" or "y")
+            ServiceOptions();
+        else
+            ExitWithMessage("Thank you for using CPQ Manila Bank!");
     }
 
     private void ExitWithMessage(string message)

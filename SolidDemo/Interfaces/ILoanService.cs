@@ -2,5 +2,5 @@
 
 public interface ILoanService
 {
-    void CalculateTotalAmount();
+    void DisplayLoanDetails(Customer customer);
 }

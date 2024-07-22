@@ -8,8 +8,8 @@ public class UserInformation
 {
     public required string FullName { get; set; }
     public required string Password { get; set; }
-    public required IReadOnlyList<IAccount> AccountList { get; set; }
-    public required IReadOnlyList<ILoan> LoanList { get; set; }
+    public required List<IAccount> AccountList { get; set; }
+    public required List<ILoan> LoanList { get; set; }
 }
 
 public static class CustomerData

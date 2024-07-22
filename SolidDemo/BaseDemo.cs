@@ -2,7 +2,7 @@
 
 namespace SolidDemo;
 
-public class BaseDemo
+public abstract class BaseDemo
 {
     public BaseDemo()
     {
