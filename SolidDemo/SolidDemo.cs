@@ -25,7 +25,7 @@ public class SolidDemo : BaseDemo
         _loggingService = ServiceProvider.GetRequiredService<ILoggingService>();
     }
     
-    private Customer customer;
+    private Customer? customer;
     private const int MaxAttempts = 3;
 
     public void Start()
