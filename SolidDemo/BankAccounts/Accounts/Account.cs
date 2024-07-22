@@ -1,6 +1,6 @@
 ﻿namespace SolidDemo.BankAccounts.Accounts;
 
-internal abstract class Account(int accountId, decimal balance)
+public abstract class Account(int accountId, decimal balance)
 {
     public int AccountId { get; } = accountId;
 

@@ -1,6 +1,6 @@
 ﻿namespace SolidDemo.BankAccounts.Enums;
 
-internal enum MoneyType
+public enum MoneyType
 {
     Dollar,
     Peso

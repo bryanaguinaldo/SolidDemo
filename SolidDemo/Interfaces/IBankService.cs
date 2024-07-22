@@ -1,8 +1,6 @@
-﻿using SolidDemo.BankAccounts.Enums;
+﻿namespace SolidDemo.Interfaces;
 
-namespace SolidDemo.Interfaces;
-
-internal interface IBankService
+public interface IBankService
 {
     void Withdraw(Customer customer, int accountId, decimal amount);
     void Deposit(Customer customer, int accountId, decimal amount);

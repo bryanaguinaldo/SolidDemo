@@ -3,7 +3,7 @@ using SolidDemo.BankAccounts.Interfaces;
 
 namespace SolidDemo.BankAccounts.Validations;
 
-internal class TimeDepositValidation : IAccountValidation
+public class TimeDepositValidation : IAccountValidation
 {
     public AccountType AccountType => AccountType.TimeDeposit;
 

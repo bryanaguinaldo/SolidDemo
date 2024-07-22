@@ -4,7 +4,7 @@ using SolidDemo.Interfaces;
 
 namespace SolidDemo.Services;
 
-internal class BankService : IBankService
+public class BankService : IBankService
 {
     private readonly ILoggingService _loggingService;
     private readonly IDictionary<AccountType, IAccountValidation> _accountValidations;

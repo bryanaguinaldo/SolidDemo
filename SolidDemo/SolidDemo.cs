@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolidDemo.BankAccounts.Enums;
 using SolidDemo.BankAccounts.Interfaces;
+using SolidDemo.Data;
 using SolidDemo.Enums;
 using SolidDemo.Interfaces;
 using SolidDemo.LoanAccounts.Enums;
@@ -31,21 +32,17 @@ public class SolidDemo : BaseDemo
     {
         _loggingService.LogMessage("\nWelcome to CPQ Manila Bank\n");
 
-        Login(out var customerId);
-
-        var userInformation = _loginService.GetUserInformation(customerId);
-        customer = new Customer(customerId, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
+        var userInformation = Login();
+        customer = new Customer(userInformation.customerId, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
 
         _loggingService.LogMessage($"\nWelcome, {userInformation.FullName}!");
 
         ServiceOptions();
-
-        Console.ReadLine();
     }
 
-    private void Login(out int customerId)
+    private UserInformation Login()
     {
-        customerId = GetValidAccountId()!;
+        var customerId = GetValidAccountId()!;
 
         if (customerId == 0)
             ExitWithMessage("Too many incorrect attempts. Exiting...");
@@ -54,6 +51,8 @@ public class SolidDemo : BaseDemo
 
         if (!isValid)
             ExitWithMessage("Too many incorrect attempts. Exiting...");
+
+        return _loginService.GetUserInformation(customerId);
     }
 
     private int GetValidAccountId()
@@ -92,6 +91,7 @@ public class SolidDemo : BaseDemo
         _loggingService.LogMessage();
         _loggingService.LogMessage("1. Bank Account Services");
         _loggingService.LogMessage("2. Loan Account Services");
+        _loggingService.LogMessage("3. Exit");
         _loggingService.LogMessage();
 
         while (true)
@@ -102,6 +102,8 @@ public class SolidDemo : BaseDemo
                 PerformBankAccountOperations();
             else if (serviceOption == "2")
                 PerformLoanAccountOperations();
+            else if (serviceOption == "3")
+                ExitWithMessage("Thank you for using CPQ Manila Bank!");
             else
                 Console.Write("Invalid option. ");
         }
@@ -138,7 +140,6 @@ public class SolidDemo : BaseDemo
         _loggingService.LogMessage("1. Deposit");
         _loggingService.LogMessage("2. Withdraw");
         _loggingService.LogMessage();
-        Console.Write("Choose: ");
 
         while (true)
         {
@@ -217,6 +218,7 @@ public class SolidDemo : BaseDemo
         _loggingService.LogMessage("2. Car Loan");
         _loggingService.LogMessage("3. Home Loan");
         _loggingService.LogMessage("4. Display all Loan");
+        _loggingService.LogMessage("5. Exit");
         _loggingService.LogMessage();
 
         while (true)
@@ -224,8 +226,12 @@ public class SolidDemo : BaseDemo
             var choose = _loggingService.GetInput("Choose: ");
             int.TryParse(choose, out var input);
 
-            if (input > 0 && input < 5)
+            if (input > 0 && input < 6)
             {
+                if (input == 5)
+                {
+                    ExitWithMessage("Thank you for using CPQ Manila Bank!");
+                }
                 if (input == 4)
                 {
                     _loanService.DisplayLoanDetails(customer);

@@ -2,7 +2,7 @@
 
 namespace SolidDemo.Services;
 
-internal class LoggingService : ILoggingService
+public class LoggingService : ILoggingService
 {
     public void LogMessage(string? message) => Console.WriteLine(message);
     public string? GetInput(string prompt)

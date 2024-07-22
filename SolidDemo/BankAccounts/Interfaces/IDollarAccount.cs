@@ -2,7 +2,7 @@
 
 namespace SolidDemo.BankAccounts.Interfaces;
 
-internal interface IDollarAccount : IAccount
+public interface IDollarAccount : IAccount
 {
     MoneyType MoneyType { get; set; }
 }

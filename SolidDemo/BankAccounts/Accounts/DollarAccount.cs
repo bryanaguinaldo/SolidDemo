@@ -3,7 +3,7 @@ using SolidDemo.BankAccounts.Interfaces;
 
 namespace SolidDemo.BankAccounts.Accounts;
 
-internal class DollarAccount(int accountId, decimal balance) : Account(accountId, balance), IDollarAccount
+public class DollarAccount(int accountId, decimal balance) : Account(accountId, balance), IDollarAccount
 {
     private const decimal DollarToPesoExchangeRate = 60.00m;
     private const decimal InterestRate = 0.02m; //2% Interest Rate Charge

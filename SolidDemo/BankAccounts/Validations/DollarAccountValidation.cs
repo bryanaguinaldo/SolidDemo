@@ -3,7 +3,7 @@ using SolidDemo.BankAccounts.Interfaces;
 
 namespace SolidDemo.BankAccounts.Validations;
 
-internal class DollarAccountValidation : IAccountValidation
+public class DollarAccountValidation : IAccountValidation
 {
     public AccountType AccountType => AccountType.Dollar;
 

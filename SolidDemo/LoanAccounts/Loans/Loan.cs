@@ -1,6 +1,4 @@
-﻿using SolidDemo.Interfaces;
-using SolidDemo.LoanAccounts.Enums;
-using SolidDemo.LoanAccounts.Interfaces;
+﻿using SolidDemo.LoanAccounts.Enums;
 
 namespace SolidDemo.LoanAccounts.Loans
 {

@@ -2,7 +2,7 @@
 using SolidDemo.BankAccounts.Interfaces;
 
 namespace SolidDemo.BankAccounts.Validations;
-internal class CurrentAccountValidation : IAccountValidation
+public class CurrentAccountValidation : IAccountValidation
 {
     public AccountType AccountType => AccountType.Current;
 
