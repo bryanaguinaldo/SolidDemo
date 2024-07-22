@@ -216,7 +216,7 @@ public class SolidDemo : BaseDemo
         ILoan loan = null;
         LoanType loanOption = 0;
         decimal amount = 0;
-        int duration = 0;
+        decimal duration = 0;
 
         Console.WriteLine();
         Console.WriteLine("1. Personal Loan");
@@ -257,9 +257,9 @@ public class SolidDemo : BaseDemo
             Console.Write("Invalid amount. Enter again: P");
         }
 
-        Console.Write("\nDuration (months): ");
+        Console.Write("\nDuration (years): ");
 
-        while (!int.TryParse(Console.ReadLine(), out duration))
+        while (!decimal.TryParse(Console.ReadLine(), out duration))
         {
             Console.Write("Invalid amount. Enter again: ");
         }
