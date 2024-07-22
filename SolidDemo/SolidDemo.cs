@@ -14,11 +14,13 @@ public class SolidDemo : BaseDemo
 {
     private readonly IBankService _bankService;
     private readonly ILoanService _loanService;
+    private readonly ILoggingService _loggingService;
 
     public SolidDemo()
     {
         _bankService = ServiceProvider.GetRequiredService<IBankService>();
         _loanService = ServiceProvider.GetRequiredService<ILoanService>();
+        _loggingService = ServiceProvider.GetRequiredService<ILoggingService>();
     }
     
     private Customer customer;
@@ -26,13 +28,13 @@ public class SolidDemo : BaseDemo
 
     public void Start()
     {
-        Console.WriteLine("\nWelcome to CPQ Manila Bank\n");
+        _loggingService.LogMessage("\nWelcome to CPQ Manila Bank\n");
 
         Login(out var id, out var userInformation);
 
         customer = new Customer(id, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
 
-        Console.WriteLine($"\nWelcome, {userInformation.FullName}!");
+        _loggingService.LogMessage($"\nWelcome, {userInformation.FullName}!");
 
         ServiceOptions();
 
@@ -64,7 +66,7 @@ public class SolidDemo : BaseDemo
             if (CustomerData.Information.ContainsKey(input))
                 return input;
 
-            Console.WriteLine($"No account ID ({input}) found. Please enter again.");
+            _loggingService.LogMessage($"No account ID ({input}) found. Please enter again.");
         }
 
         return 0;
@@ -82,7 +84,7 @@ public class SolidDemo : BaseDemo
                 return true;
             }
 
-            Console.WriteLine("Wrong password. Please try again.");
+            _loggingService.LogMessage("Wrong password. Please try again.");
         }
 
         return false;
@@ -90,10 +92,10 @@ public class SolidDemo : BaseDemo
 
     private void ServiceOptions()
     {
-        Console.WriteLine();
-        Console.WriteLine("1. Bank Account Services");
-        Console.WriteLine("2. Loan Account Services");
-        Console.WriteLine();
+        _loggingService.LogMessage();
+        _loggingService.LogMessage("1. Bank Account Services");
+        _loggingService.LogMessage("2. Loan Account Services");
+        _loggingService.LogMessage();
         Console.Write("Choose: ");
 
         while (true)
@@ -115,12 +117,12 @@ public class SolidDemo : BaseDemo
         BankServiceType bankServiceAction = 0;
         decimal amount = 0;
 
-        Console.WriteLine();
-        Console.WriteLine("1. Savings Account");
-        Console.WriteLine("2. Current Account");
-        Console.WriteLine("3. Time Deposit Account");
-        Console.WriteLine("4. Dollar Account");
-        Console.WriteLine();
+        _loggingService.LogMessage();
+        _loggingService.LogMessage("1. Savings Account");
+        _loggingService.LogMessage("2. Current Account");
+        _loggingService.LogMessage("3. Time Deposit Account");
+        _loggingService.LogMessage("4. Dollar Account");
+        _loggingService.LogMessage();
         Console.Write("Choose: ");
 
         while (true)
@@ -138,10 +140,10 @@ public class SolidDemo : BaseDemo
             }
         }
 
-        Console.WriteLine();
-        Console.WriteLine("1. Deposit");
-        Console.WriteLine("2. Withdraw");
-        Console.WriteLine();
+        _loggingService.LogMessage();
+        _loggingService.LogMessage("1. Deposit");
+        _loggingService.LogMessage("2. Withdraw");
+        _loggingService.LogMessage();
         Console.Write("Choose: ");
 
         while (true)
@@ -170,10 +172,10 @@ public class SolidDemo : BaseDemo
 
         if (account.AccountType is AccountType.Dollar)
         {
-            Console.WriteLine();
-            Console.WriteLine("1. Money (dollar)");
-            Console.WriteLine("2. Money (peso)");
-            Console.WriteLine();
+            _loggingService.LogMessage();
+            _loggingService.LogMessage("1. Money (dollar)");
+            _loggingService.LogMessage("2. Money (peso)");
+            _loggingService.LogMessage();
             Console.Write("Choose: ");
 
             while (true)
@@ -194,14 +196,14 @@ public class SolidDemo : BaseDemo
             }
         }
 
-        Console.WriteLine();
+        _loggingService.LogMessage();
 
         if (bankServiceAction == BankServiceType.Deposit)
             _bankService.Deposit(customer, accountId, amount);
         else if (bankServiceAction == BankServiceType.Withdraw)
             _bankService.Withdraw(customer, accountId, amount);
 
-        Console.WriteLine();
+        _loggingService.LogMessage();
         Console.Write("Do you want to transact again? (Y or N): ");
         var needTransaction = Console.ReadLine();
 
@@ -220,12 +222,12 @@ public class SolidDemo : BaseDemo
 
         var loanId = new Random().Next(5000, 9999);
 
-        Console.WriteLine();
-        Console.WriteLine("1. Personal Loan");
-        Console.WriteLine("2. Car Loan");
-        Console.WriteLine("3. Home Loan");
-        Console.WriteLine("4. Display all Loan");
-        Console.WriteLine();
+        _loggingService.LogMessage();
+        _loggingService.LogMessage("1. Personal Loan");
+        _loggingService.LogMessage("2. Car Loan");
+        _loggingService.LogMessage("3. Home Loan");
+        _loggingService.LogMessage("4. Display all Loan");
+        _loggingService.LogMessage();
         Console.Write("Choose: ");
 
         while (true)
@@ -275,7 +277,7 @@ public class SolidDemo : BaseDemo
 
         loan.OutputMessage();
 
-        Console.WriteLine();
+        _loggingService.LogMessage();
         Console.Write("Proceed to loan (Y or N): ");
         var proceed = Console.ReadLine();
 
@@ -283,14 +285,14 @@ public class SolidDemo : BaseDemo
         {
             _loanService.AddLoan(customer, loan);
             _loanService.DisplayLoanDetails(customer);
-            Console.WriteLine($"Successfully creating {loanOption.ToString()} loan account.");
+            _loggingService.LogMessage($"Successfully creating {loanOption.ToString()} loan account.");
         }
         else
         {
-            Console.WriteLine("Cancelling loan request...");
+            _loggingService.LogMessage("Cancelling loan request...");
         }
 
-        Console.WriteLine();
+        _loggingService.LogMessage();
         Console.Write("Do you want to transact again? (Y or N): ");
         var needTransaction = Console.ReadLine();
 
@@ -302,7 +304,7 @@ public class SolidDemo : BaseDemo
 
     private void ExitWithMessage(string message)
     {
-        Console.WriteLine(message);
+        _loggingService.LogMessage(message);
         Console.ReadLine();
 
         Environment.Exit(0);

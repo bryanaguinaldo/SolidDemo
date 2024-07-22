@@ -2,5 +2,5 @@
 
 public interface ILoggingService
 {
-    void LogMessage(string message);
+    void LogMessage(string? message = null);
 }
