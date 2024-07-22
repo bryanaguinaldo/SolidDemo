@@ -1,16 +1,49 @@
-﻿namespace SolidDemo.Data;
+﻿using SolidDemo.BankAccounts.Accounts;
+using SolidDemo.BankAccounts.Enums;
+using SolidDemo.BankAccounts.Interfaces;
+
+namespace SolidDemo.Data;
 
 public class UserInformation
 {
-    public string? FullName { get; set; }
-    public string? Password { get; set; }
+    public required string FullName { get; set; }
+    public required string Password { get; set; }
+    public required IReadOnlyList<IAccount> AccountList { get; set; }
 }
 
 public static class CustomerData
 {
-    public static Dictionary<string, UserInformation> Information { get; } = new Dictionary<string, UserInformation>
+    public static Dictionary<int, UserInformation> Information { get; } = new Dictionary<int, UserInformation>
     {
-        { "1001", new UserInformation { FullName = "Bryan Joseph Aguinaldo", Password = "CPQ" } },
-        { "1002", new UserInformation { FullName = "Hansel Avellana", Password = "CPQ" } }
+        { 
+            1001, 
+            new UserInformation 
+            {
+                FullName = "Bryan Joseph Aguinaldo", 
+                Password = "CPQ",
+                AccountList = new List<IAccount>
+                {
+                    new SavingsAccount(1001, 50000.00m),
+                    new CurrentAccount(1002, 50000.00m, 5000m),
+                    new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30),
+                    new DollarAccount(1004, 50000.00m, MoneyType.Dollar)
+                }
+            } 
+        },
+        {
+            1002,
+            new UserInformation 
+            { 
+                FullName = "Hansel Avellana",
+                Password = "CPQ",
+                AccountList = new List<IAccount>
+                {
+                    new SavingsAccount(1001, 50000.00m),
+                    new CurrentAccount(1002, 50000.00m, 5000m),
+                    new TimeDepositAccount(1003, 50000m, DateTime.Today.Subtract(TimeSpan.FromDays(29)), 30),
+                    new DollarAccount(1004, 50000.00m, MoneyType.Dollar)
+                }
+            }
+        }
     };
 }

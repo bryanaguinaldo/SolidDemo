@@ -2,7 +2,7 @@
 
 namespace SolidDemo.BankAccounts.Interfaces;
 
-internal interface IAccount
+public interface IAccount
 {
     int AccountId { get; }
     decimal Balance { get; set; }

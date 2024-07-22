@@ -1,6 +1,6 @@
 ﻿namespace SolidDemo.BankAccounts.Enums;
 
-internal enum AccountType
+public enum AccountType
 {
     Savings,
     Current,
