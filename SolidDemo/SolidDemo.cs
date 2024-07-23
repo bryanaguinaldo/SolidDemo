@@ -32,7 +32,7 @@ public class SolidDemo : BaseDemo
     {
         _loggingService.LogMessage("\nWelcome to CPQ Manila Bank\n");
 
-        var userInformation = Login();
+        var userInformation = GetLoginInformation();
         customer = new Customer(userInformation.customerId, userInformation.FullName, userInformation.AccountList, userInformation.LoanList);
 
         _loggingService.LogMessage($"\nWelcome, {userInformation.FullName}!");
@@ -40,7 +40,7 @@ public class SolidDemo : BaseDemo
         ServiceOptions();
     }
 
-    private UserInformation Login()
+    private UserInformation GetLoginInformation()
     {
         var customerId = GetValidAccountId()!;
 
