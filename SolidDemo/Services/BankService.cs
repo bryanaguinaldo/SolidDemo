@@ -22,18 +22,8 @@ public class BankService : IBankService
         if (!_accountValidations.TryGetValue(account.AccountType, out var accountValidation))
             throw new ArgumentException($"Account type {account} is not Valid");
 
-        if (accountValidation.IsValid(account, amount))
-        {
-            account.Deposit(amount);
-            _loggingService.LogMessage($"Deposit of {amount} successful. New balance: {Math.Round(account.Balance)}");
-        }
-        else
-        {
-            if (account is ITimeDepositAccount timeDeposit)
-                LogTimeDepositError(timeDeposit);
-            else
-                _loggingService.LogMessage("Withdrawal failed. Check the amount and balance.");
-        }
+        account.Deposit(amount);
+        _loggingService.LogMessage($"Deposit of {amount} successful. New balance: {Math.Round(account.Balance)}");
     }
 
     public void Withdraw(Customer customer, int accountId, decimal amount)
